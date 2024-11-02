@@ -6,6 +6,7 @@ export default function Home() {
       <h1>HELLO</h1>
       <img src="/TRVG_Logo.png" alt="App Logo" width="100" height="100" />
       <Test />
+      <h1>Dex test</h1>
     </div>
   );
 }
