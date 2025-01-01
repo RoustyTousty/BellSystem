@@ -8,7 +8,8 @@ contextBridge.exposeInMainWorld("electronAPI", {
         ipcRenderer.send(channel, args);
     },
 
-    saveAudioFile: (filename, data) => ipcRenderer.invoke('save-audio-file', filename, data),
-    deleteAudioFile: (filename) => ipcRenderer.invoke('delete-audio-file', filename),
-    getAudioFiles: () => ipcRenderer.invoke('get-audio-files'),
+    selectFile: () => ipcRenderer.invoke('select-file'),
+    saveSound: (filePath, fileName) => ipcRenderer.invoke('save-sound', filePath, fileName),
+    getSchedule: () => ipcRenderer.invoke('get-schedule'),
+    addSchedule: (time, fileName) => ipcRenderer.invoke('add-schedule', time, fileName),
 });

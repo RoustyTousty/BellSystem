@@ -1,7 +1,8 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
-require('./AudioService.js');
+// Load IPC handlers
+require('./services/IPCHandler.js');
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -9,7 +10,9 @@ const createWindow = () => {
         height: 600,
         icon: path.join(__dirname, "../public/TRVG_Logo.png"),
         webPreferences: {
-            preload: path.join(__dirname, "preload.js")
+            preload: path.join(__dirname, "preload.js"),
+            contextIsolation: true,
+            nodeIntegration: false,
         }
     });
 
@@ -31,7 +34,6 @@ const createWindow = () => {
 };
 
 app.on("ready", createWindow);
-
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") {
         app.quit();
