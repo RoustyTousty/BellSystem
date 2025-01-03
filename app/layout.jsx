@@ -1,3 +1,4 @@
+import Link from "next/link";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -23,7 +24,13 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <header className="p-5 bg-gray-1000">
+          <nav className="flex gap-5">
+            <Link href="/main">Main Page</Link>
+            <Link href="/template-builder">Template Builder</Link>
+          </nav>
+        </header>
+        <main className="p-5">{children}</main>
       </body>
     </html>
   );

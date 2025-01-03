@@ -1,0 +1,15 @@
+[
+  {
+    "name": "Test",
+    "schedule": [
+      {
+        "time": "06:00",
+        "fileName": "Smooth.mp3"
+      },
+      {
+        "time": "15:00",
+        "fileName": "Smooth.mp3"
+      }
+    ]
+  }
+]
