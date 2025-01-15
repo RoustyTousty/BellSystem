@@ -1,25 +1,38 @@
 const { ipcMain, dialog } = require('electron');
+const player = require('play-sound')();
+const path = require('path');
+
 const { saveSound } = require('./AudioService');
-const { loadSchedule, addSchedule } = require('./ScheduleService');
+const { getTemplates, saveTemplate, deleteTemplate, activateTemplate } = require('./TemplateService');
 
 ipcMain.handle('save-sound', (event, filePath, fileName) => {
     saveSound(filePath, fileName);
 });
 
-ipcMain.handle('get-schedule', () => {
-    return loadSchedule();
+ipcMain.handle("play-sound", (event, fileName) => {
+    const filePath = path.join(__dirname, "../../sounds", fileName);
+
+    player.play(filePath, (err) => {
+        if (err) {
+            console.error(`Error playing ${fileName}:`, err);
+        } else {
+            console.log(`${fileName} is playing.`);
+        }
+    });
 });
 
-ipcMain.handle('add-schedule', (event, time, fileName) => {
-    addSchedule(time, fileName);
+ipcMain.handle("get-templates", () => {
+	return getTemplates()
 });
 
-ipcMain.handle('select-file', async () => {
-    const result = await dialog.showOpenDialog({ properties: ['openFile'] });
-    if (result.canceled || result.filePaths.length === 0) {
-        return null;
-    }
-    const filePath = result.filePaths[0];
-    const fileName = path.basename(filePath);
-    return { filePath, fileName };
+ipcMain.handle("save-template", (event, template) => {
+	saveTemplate(template)
+});
+
+ipcMain.handle("delete-template", (event, templateName) => {
+	deleteTemplate(templateName)
+});
+
+ipcMain.handle("activate-template", (event, templateName) => {
+	activateTemplate(templateName)
 });
