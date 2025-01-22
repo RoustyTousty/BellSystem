@@ -11,5 +11,23 @@
         "fileName": "Smooth.mp3"
       }
     ]
+  },
+  {
+    "name": "Sesta",
+    "schedule": [
+      {
+        "time": "12:50",
+        "fileName": "Smooth.mp3"
+      }
+    ]
+  },
+  {
+    "name": "test2",
+    "schedule": [
+      {
+        "time": "12:04",
+        "fileName": "Smooth.mp3"
+      }
+    ]
   }
 ]
