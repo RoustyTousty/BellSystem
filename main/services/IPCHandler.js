@@ -1,25 +1,15 @@
-const { ipcMain, dialog } = require('electron');
-const player = require('play-sound')();
-const path = require('path');
+const { ipcMain } = require('electron');
 
-const { saveSound } = require('./AudioService');
+const { saveSound, playSound } = require('./AudioService');
 const { getTemplates, saveTemplate, deleteTemplate, activateTemplate } = require('./TemplateService');
 
 ipcMain.handle('save-sound', (event, filePath, fileName) => {
-    saveSound(filePath, fileName);
+    saveSound(filePath, fileName)
 });
 
-ipcMain.handle("play-sound", (event, fileName) => {
-    const filePath = path.join(__dirname, "../../sounds", fileName);
-
-    player.play(filePath, (err) => {
-        if (err) {
-            console.error(`Error playing ${fileName}:`, err);
-        } else {
-            console.log(`${fileName} is playing.`);
-        }
-    });
-});
+// ipcMain.handle("play-sound", (event, fileName) => {
+//     playSound(fileName);
+// });
 
 ipcMain.handle("get-templates", () => {
 	return getTemplates()

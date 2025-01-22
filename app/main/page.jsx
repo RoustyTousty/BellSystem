@@ -5,6 +5,7 @@ export default function MainPage() {
   const [templates, setTemplates] = useState([]);
   const [activeTemplate, setActiveTemplate] = useState("");
   const [manualSound, setManualSound] = useState("");
+  const [currentAudio, setCurrentAudio] = useState(null); // Track the current playing audio
 
   useEffect(() => {
     const fetchTemplates = async () => {
@@ -19,9 +20,31 @@ export default function MainPage() {
     setActiveTemplate(templateName);
   };
 
-  const playManualSound = async () => {
-    if (!manualSound) return alert("Select a sound to play!");
-    await window.electronAPI.playSound(manualSound);
+  const playManualSound = () => {
+    if (!manualSound) {
+      alert("Select a sound to play!");
+      return;
+    }
+
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+    }
+
+    const newAudio = new Audio(`/sounds/${manualSound}`);
+    newAudio.play()
+      .then(() => {
+        console.log(`Playing: ${manualSound}`);
+        setCurrentAudio(newAudio);
+      })
+      .catch((error) => {
+        console.error("Error playing sound:", error);
+        alert("Error playing the selected sound.");
+      });
+
+    newAudio.addEventListener("ended", () => {
+      setCurrentAudio(null);
+    });
   };
 
   return (
@@ -51,7 +74,7 @@ export default function MainPage() {
         >
           <option value="">Select Sound</option>
           <option value="Smooth.mp3">Smooth.mp3</option>
-          {/* Dynamically add sound options */}
+          {/* Dynamically add sound options here */}
         </select>
         <button
           onClick={playManualSound}

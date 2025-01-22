@@ -8,14 +8,11 @@ contextBridge.exposeInMainWorld("electronAPI", {
         ipcRenderer.send(channel, args);
     },
 
-    selectFile: () => ipcRenderer.invoke('select-file'),
-    getSchedule: () => ipcRenderer.invoke('get-schedule'),
-    addSchedule: (time, fileName) => ipcRenderer.invoke('add-schedule', time, fileName),
+    // AudioService
+    saveSound: (event, filePath, fileName) => ipcRenderer.invoke('save-sound', event, filePath, fileName),
+    // playSound: (event, fileName) => ipcRenderer.invoke('play-sound', event, fileName),
 
-
-    saveSound: (filePath, fileName) => ipcRenderer.invoke('save-sound', filePath, fileName),
-    playSound: (event, fileName) => ipcRenderer.invoke('play-sound', event, fileName),
-
+    // TemplateService
     getTemplates: () => ipcRenderer.invoke('get-templates'),
     saveTemplate: (event, template) => ipcRenderer.invoke('save-template', event, template),
     deleteTemplate: (event, templateName) => ipcRenderer.invoke('delete-template', event, templateName),

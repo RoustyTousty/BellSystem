@@ -17,7 +17,8 @@
     "node-schedule": "^2.1.1",
     "play-sound": "^1.1.6",
     "react": "19.0.0-rc-02c0e824-20241028",
-    "react-dom": "19.0.0-rc-02c0e824-20241028"
+    "react-dom": "19.0.0-rc-02c0e824-20241028",
+    "sound-play": "^1.1.0"
   },
   "devDependencies": {
     "concurrently": "^9.0.1",
