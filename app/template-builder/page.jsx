@@ -34,9 +34,9 @@ export default function TemplateBuilder() {
 
   return (
     <div className="p-5">
-      <h1 className="text-2xl font-bold mb-5">Template Builder</h1>
+      <h1 className="text-2xl font-bold mb-5">Zvana Trafaretu Izveidotājs</h1>
       <div className="mb-5">
-        <label>Template Name:</label>
+        <label>Trafareta nosaukums:</label>
         <input
           type="text"
           value={currentTemplate.name}
@@ -45,7 +45,7 @@ export default function TemplateBuilder() {
         />
       </div>
       <div className="mb-5">
-        <label>Add Time:</label>
+        <label>Pievienot laiku:</label>
         <input
           type="time"
           value={newTime}
@@ -57,12 +57,12 @@ export default function TemplateBuilder() {
           onChange={(e) => setNewSound(e.target.value)}
           className="border p-2 rounded"
         >
-          <option value="">Select Sound</option>
+          <option value="">Mūzika</option>
           <option value="Smooth.mp3">Smooth.mp3</option>
           {/* Dynamically add sound options here */}
         </select>
         <button onClick={addTime} className="ml-2 bg-blue-500 text-white px-4 py-2 rounded">
-          Add
+          Pievienot
         </button>
       </div>
       <ul>
@@ -75,7 +75,7 @@ export default function TemplateBuilder() {
           ))}
       </ul>
       <button onClick={saveTemplate} className="mt-5 bg-green-500 text-white px-4 py-2 rounded">
-        Save Template
+        Saglabāt trafaretu
       </button>
     </div>
   );

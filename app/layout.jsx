@@ -24,11 +24,19 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <header className="p-5 bg-gray-1000">
-          <nav className="flex gap-5">
-            <Link href="/main">Main Page</Link>
-            <Link href="/template-builder">Template Builder</Link>
-          </nav>
+        <header className="p-2 bg-gray-1000">
+
+          <div className="navbar bg-black flex justify-between">
+            <img src="/TRVG_Logo_noBG.png" className="h-20 ml-5" />
+
+            <div className="mx-5 text-lg">
+              <Link href="/main" className="ml-5"><p>Zvana Iestatīšana</p></Link>
+              <Link href="/template-builder" className="ml-5"><p>Trafaretu Izveidotājs</p></Link>
+              <Link href="/buj" className="mx-5"><p>Palīdzība</p></Link>
+            </div>
+
+          </div>
+
         </header>
         <main className="p-5">{children}</main>
       </body>

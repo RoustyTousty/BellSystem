@@ -1,5 +1,6 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
+const isDev = !app.isPackaged;
 
 // Load IPC handlers
 require('./services/IPCHandler.js');
