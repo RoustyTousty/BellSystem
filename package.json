@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "electron-serve": "^2.1.1",
-    "next": "15.0.2",
+    "next": "^15.1.4",
     "node-schedule": "^2.1.1",
     "play-sound": "^1.1.6",
     "react": "19.0.0-rc-02c0e824-20241028",
@@ -21,7 +21,8 @@
     "sound-play": "^1.1.0"
   },
   "devDependencies": {
-    "concurrently": "^9.0.1",
+    "concurrently": "^9.1.0",
+    "daisyui": "^4.12.23",
     "electron": "^33.0.2",
     "electron-builder": "^25.1.8",
     "eslint": "^8",
