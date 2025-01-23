@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
         <header className="p-2 bg-gray-1000">
 
           <div className="navbar bg-black flex justify-between">
-            <img src="/TRVG_Logo_noBG.png" className="h-20 ml-5" />
+            <Link href="/startUp"><img src="/TRVG_Logo_noBG.png" className="btn h-20 ml-5 bg-black hover:bg-black outline-none border-transparent hover:border-transparent" /></Link>
 
             <div className="mx-5 text-lg">
               <Link href="/main" className="ml-5"><p>Zvana Iestatīšana</p></Link>
