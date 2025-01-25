@@ -5,7 +5,7 @@ export default function MainPage() {
   const [templates, setTemplates] = useState([]);
   const [activeTemplate, setActiveTemplate] = useState("");
   const [manualSound, setManualSound] = useState("");
-  const [currentAudio, setCurrentAudio] = useState(null); // Track the current playing audio
+  const [currentAudio, setCurrentAudio] = useState(null);
 
   useEffect(() => {
     const fetchTemplates = async () => {
@@ -48,16 +48,16 @@ export default function MainPage() {
   };
 
   return (
-    <div className="p-5">
-      <h1 className="text-2xl font-bold mb-5">Zvana Iestatīšana</h1>
+    <div className="p-5 bg-neutral text-primary min-h-screen flex flex-col items-center justify-center">
+      <h1 className="text-4xl font-bold mb-10">Sound Scheduler</h1>
       <div>
-        <h2 className="text-xl font-semibold mb-3">Izvēlēties Aktīvo Trafaretu</h2>
+        <h2 className="text-xl font-semibold mb-3">Select Active Template</h2>
         <select
           value={activeTemplate}
           onChange={(e) => activateTemplate(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full bg-base-100 text-primary"
         >
-          <option value="">Trafareta izvēle</option>
+          <option value="">Select Template</option>
           {templates.map((template, index) => (
             <option key={index} value={template.name}>
               {template.name}
@@ -66,21 +66,20 @@ export default function MainPage() {
         </select>
       </div>
       <div className="mt-5">
-        <h2 className="text-xl font-semibold mb-3">Manuālā Atskaņošana</h2>
+        <h2 className="text-xl font-semibold mb-3">Manual Playback</h2>
         <select
           value={manualSound}
           onChange={(e) => setManualSound(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full bg-base-100 text-primary"
         >
-          <option value="">Mūzikas izvēle</option>
+          <option value="">Select Sound</option>
           <option value="Smooth.mp3">Smooth.mp3</option>
-          {/* Dynamically add sound options here */}
         </select>
         <button
           onClick={playManualSound}
-          className="mt-3 bg-blue-500 text-white px-4 py-2 rounded w-full"
+          className="mtn-3 btn btn-primary text-neutral"
         >
-          Atskaņot zvanu
+          Play Sound
         </button>
       </div>
     </div>

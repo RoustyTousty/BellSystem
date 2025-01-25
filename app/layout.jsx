@@ -1,6 +1,6 @@
-import Link from "next/link";
 import localFont from "next/font/local";
 import "./globals.css";
+import Navbar from "@/components/Navbar"; // Import the Navbar component
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,21 +24,12 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <header className="p-2 bg-gray-1000">
-
-          <div className="navbar bg-black flex justify-between">
-            <Link href="/startUp"><img src="/TRVG_Logo_noBG.png" className="btn h-20 ml-5 bg-black hover:bg-black outline-none border-transparent hover:border-transparent" /></Link>
-
-            <div className="mx-5 text-lg">
-              <Link href="/main" className="ml-5"><p>Zvana Iestatīšana</p></Link>
-              <Link href="/template-builder" className="ml-5"><p>Trafaretu Izveidotājs</p></Link>
-              <Link href="/buj" className="mx-5"><p>Palīdzība</p></Link>
-            </div>
-
+        <Navbar />
+        <main className="flex flex-col h-screen overflow-hidden">
+          <div className="flex-1 overflow-auto">
+            {children}
           </div>
-
-        </header>
-        <main className="p-5">{children}</main>
+        </main>
       </body>
     </html>
   );
