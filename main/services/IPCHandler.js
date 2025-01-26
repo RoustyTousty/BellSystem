@@ -1,15 +1,19 @@
 const { ipcMain } = require('electron');
 
-const { saveSound, playSound } = require('./AudioService');
+const { saveSound, listSounds, deleteSound } = require('./AudioService');
 const { getTemplates, saveTemplate, deleteTemplate, activateTemplate } = require('./TemplateService');
 
-ipcMain.handle('save-sound', (event, filePath, fileName) => {
-    saveSound(filePath, fileName)
+ipcMain.handle("save-sound", (event, filePath, fileName) => {
+	saveSound(filePath, fileName);
 });
-
-// ipcMain.handle("play-sound", (event, fileName) => {
-//     playSound(fileName);
-// });
+  
+ipcMain.handle("list-sounds", () => {
+	return listSounds();
+});
+  
+ipcMain.handle("delete-sound", (event, fileName) => {
+	deleteSound(fileName);
+});
 
 ipcMain.handle("get-templates", () => {
 	return getTemplates()

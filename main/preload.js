@@ -9,8 +9,9 @@ contextBridge.exposeInMainWorld("electronAPI", {
     },
 
     // AudioService
-    saveSound: (event, filePath, fileName) => ipcRenderer.invoke('save-sound', event, filePath, fileName),
-    // playSound: (event, fileName) => ipcRenderer.invoke('play-sound', event, fileName),
+    saveSound: (event, fileBuffer, fileName) => ipcRenderer.invoke('save-sound', event, fileBuffer, fileName),
+    deleteSound: (event, fileName) => ipcRenderer.invoke('delete-sound', event, fileName),
+    listSounds: () => ipcRenderer.invoke('list-sounds'),
 
     // TemplateService
     getTemplates: () => ipcRenderer.invoke('get-templates'),

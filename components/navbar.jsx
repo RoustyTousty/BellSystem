@@ -29,7 +29,7 @@ export default function Navbar() {
           </Link>
 
           <Link href="/music">
-            <button className="btn btn-primary text-neutral">Pievienot mūziku</button>
+            <button className="btn btn-primary text-neutral">Pievienot audio</button>
           </Link>
 
           <Link href="/buj">

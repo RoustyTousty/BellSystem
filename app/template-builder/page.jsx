@@ -47,9 +47,9 @@ export default function TemplateBuilder() {
   const getListHeight = () => {
     const scheduleLength = currentTemplate.schedule.length;
     if (scheduleLength <= 4) {
-      return `${scheduleLength * 48}px`; // Increase the height dynamically based on the number of items
+      return `${scheduleLength * 48}px`;
     }
-    return "192px"; // Fixed height after 4 items, with scrollbar
+    return "192px";
   };
 
   return (
@@ -97,7 +97,6 @@ export default function TemplateBuilder() {
         </div>
       </div>
 
-      {/* Conditionally render list only when there are items */}
       {currentTemplate.schedule.length > 0 && (
         <div className="w-full max-w-md" style={{ height: getListHeight(), overflowY: "auto" }}>
           <ul>
@@ -108,9 +107,9 @@ export default function TemplateBuilder() {
                   {item.startTime} - {item.endTime}
                   <button
                     onClick={() => removeTime(index)}
-                    className="ml-2 text-red-500"
+                    className="ml-2 text-red-500 font-semibold"
                   >
-                    noņemt
+                    Noņemt
                   </button>
                 </li>
               ))}
