@@ -5,6 +5,7 @@ export default function MainPage() {
   const [templates, setTemplates] = useState([]);
   const [activeTemplate, setActiveTemplate] = useState("");
   const [manualSound, setManualSound] = useState("");
+  const [selectedMusic, setSelectedMusic] = useState(""); // State for selected music
   const [currentAudio, setCurrentAudio] = useState(null);
   const [schedule, setSchedule] = useState([]);
   const [playedTimes, setPlayedTimes] = useState([]);
@@ -15,13 +16,17 @@ export default function MainPage() {
       const savedTemplates = await window.electronAPI.getTemplates();
       setTemplates(savedTemplates);
     };
+  
     fetchTemplates();
-
+  }, []);
+  
+  useEffect(() => {
     const savedTemplate = localStorage.getItem("selectedTemplate");
-    if (savedTemplate) {
+  
+    if (savedTemplate && templates.length > 0) {
       setActiveTemplate(savedTemplate);
       const selectedTemplate = templates.find((template) => template.name === savedTemplate);
-
+  
       if (selectedTemplate && selectedTemplate.schedule) {
         setSchedule(selectedTemplate.schedule);
         startTemplateTimer(selectedTemplate.schedule);
@@ -129,11 +134,14 @@ export default function MainPage() {
       setCurrentAudio(null);
     });
   };
-  
+
+
+  const isTemplateAndMusicSelected = activeTemplate && selectedMusic;
 
   return (
     <div className="p-5 bg-neutral text-primary h-screen overflow-hidden flex flex-col items-center pt-20">
       <h1 className="text-4xl font-bold mb-10">Atskaņošana</h1>
+
 
       <div>
         <h2 className="text-xl text-center font-semibold mb-3">Saraksts</h2>
@@ -151,10 +159,25 @@ export default function MainPage() {
         </select>
       </div>
 
+
+      {activeTemplate && (
+        <div>
+          <h2 className="text-xl text-center font-semibold mb-3 mt-5">Izvēlieties mūziku</h2>
+          <select
+            value={selectedMusic}
+            onChange={(e) => setSelectedMusic(e.target.value)}
+            className="border p-2 rounded w-full bg-base-100 text-primary"
+          >
+            <option value="">Izvēlēties mūziku</option>
+            <option value="Smooth.mp3">Smooth.mp3</option>
+          </select>
+        </div>
+      )}
+
       <div
-        className={`badge mt-7 ${activeTemplate ? "bg-primary text-white" : "bg-gray-400 text-neutral"}`}
+        className={`badge mt-7 ${isTemplateAndMusicSelected ? "bg-primary text-white" : "bg-gray-400 text-neutral"}`}
       >
-        {activeTemplate ? "Aktivizēts" : "Neaktīvs"}
+        {isTemplateAndMusicSelected ? "Aktivizēts" : "Neaktīvs"}
       </div>
 
       <div className="mt-5 flex flex-col adjust-center">
@@ -174,9 +197,8 @@ export default function MainPage() {
         >
           Atskaņot
         </button>
-
       </div>
+
     </div>
   );
 }
-

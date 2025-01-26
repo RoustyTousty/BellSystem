@@ -3,14 +3,28 @@ import React, { useState, useEffect } from "react";
 
 const StartUp = () => {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
+  const [greeting, setGreeting] = useState("Labrīt!"); // Default greeting
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentDateTime(new Date());
+      const newDateTime = new Date();
+      setCurrentDateTime(newDateTime);
+      updateGreeting(newDateTime);
     }, 1000);
 
     return () => clearInterval(interval);
   }, []);
+
+  const updateGreeting = (date) => {
+    const hours = date.getHours();
+    if (hours >= 4 && hours < 12) {
+      setGreeting("Labrīt!"); // 4:01 AM - 12:00 PM
+    } else if (hours >= 12 && hours < 16) {
+      setGreeting("Labdien!"); // 12:01 PM - 4:00 PM
+    } else {
+      setGreeting("Labvakar!"); // 4:01 PM - 4:00 AM
+    }
+  };
 
   const formatDate = (date) => {
     const day = String(date.getDate()).padStart(2, "0");
@@ -32,7 +46,7 @@ const StartUp = () => {
 
   return (
     <div className="p-5 bg-neutral text-primary flex flex-col items-center pt-20 h-screen">
-      <h1 className="text-4xl font-bold mb-10">Sveiki!</h1>
+      <h1 className="text-4xl font-bold mb-10">{greeting}</h1>
 
       <p className="text-2xl font-semibold mb-5">
         Šodien:{" "}

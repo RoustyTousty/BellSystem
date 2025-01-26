@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 export default function TemplateBuilder() {
   const [templates, setTemplates] = useState([]);
   const [currentTemplate, setCurrentTemplate] = useState({ name: "", schedule: [] });
-  const [newTime, setNewTime] = useState("");
-  const [newSound, setNewSound] = useState("");
+  const [newStartTime, setNewStartTime] = useState("");
+  const [newEndTime, setNewEndTime] = useState("");
 
   useEffect(() => {
     const fetchTemplates = async () => {
@@ -16,19 +16,40 @@ export default function TemplateBuilder() {
   }, []);
 
   const addTime = () => {
-    if (!newTime || !newSound) return alert("Lūdzu aizpildiet laika un mūzikas lauku!");
+    if (!newStartTime || !newEndTime) {
+      return alert("Lūdzu aizpildiet laika laukus!");
+    }
     setCurrentTemplate((prev) => ({
       ...prev,
-      schedule: [...prev.schedule, { time: newTime, fileName: newSound }],
+      schedule: [
+        ...prev.schedule,
+        { startTime: newStartTime, endTime: newEndTime },
+      ],
     }));
-    setNewTime("");
-    setNewSound("");
+    setNewStartTime("");
+    setNewEndTime("");
+  };
+
+  const removeTime = (index) => {
+    setCurrentTemplate((prev) => {
+      const updatedSchedule = prev.schedule.filter((_, i) => i !== index);
+      return { ...prev, schedule: updatedSchedule };
+    });
   };
 
   const saveTemplate = async () => {
-    if (!currentTemplate.name) return alert("Template must have a name!");
+    if (!currentTemplate.name) return alert("Lūdzu nosauciet sarakstu!");
+    if (currentTemplate.schedule.length === 0) return alert("Sarakstā ir jābūt vismaz vienam laika posmam!");
     await window.electronAPI.saveTemplate(currentTemplate);
     alert("Template saved successfully!");
+  };
+
+  const getListHeight = () => {
+    const scheduleLength = currentTemplate.schedule.length;
+    if (scheduleLength <= 4) {
+      return `${scheduleLength * 48}px`; // Increase the height dynamically based on the number of items
+    }
+    return "192px"; // Fixed height after 4 items, with scrollbar
   };
 
   return (
@@ -46,22 +67,27 @@ export default function TemplateBuilder() {
       </div>
 
       <div className="mb-5 w-full max-w-md">
-        <label className="block text-xl font-semibold mb-2">Pievienot laiku un mūziku:</label>
-        <div className="flex justify-between">
+        <label className="block text-xl font-semibold mb-2">Pievienot stundu laiku:</label>
+        <div className="flex items-center justify-between">
+          
+          <h1 className="mr-2">No:</h1>
+          
           <input
             type="time"
-            value={newTime}
-            onChange={(e) => setNewTime(e.target.value)}
+            value={newStartTime}
+            onChange={(e) => setNewStartTime(e.target.value)}
             className="border p-2 rounded mr-2 bg-base-100 text-primary"
           />
-          <select
-            value={newSound}
-            onChange={(e) => setNewSound(e.target.value)}
-            className="border p-2 rounded bg-base-100 text-primary"
-          >
-            <option value="">Mūzika</option>
-            <option value="Smooth.mp3">Smooth.mp3</option>
-          </select>
+
+          <h1 className="mr-2">Līdz:</h1>
+          
+          <input
+            type="time"
+            value={newEndTime}
+            onChange={(e) => setNewEndTime(e.target.value)}
+            className="border p-2 rounded mr-2 bg-base-100 text-primary"
+          />
+
           <button
             onClick={addTime}
             className="btn btn-primary text-neutral"
@@ -71,15 +97,26 @@ export default function TemplateBuilder() {
         </div>
       </div>
 
-      <ul className="w-full max-w-md">
-        {currentTemplate.schedule
-          .sort((a, b) => a.time.localeCompare(b.time))
-          .map((item, index) => (
-            <li key={index} className="py-2 px-2 border-b-2 border-base-100">
-              {item.time} - {item.fileName}
-            </li>
-          ))}
-      </ul>
+      {/* Conditionally render list only when there are items */}
+      {currentTemplate.schedule.length > 0 && (
+        <div className="w-full max-w-md" style={{ height: getListHeight(), overflowY: "auto" }}>
+          <ul>
+            {currentTemplate.schedule
+              .sort((a, b) => a.startTime.localeCompare(b.startTime))
+              .map((item, index) => (
+                <li key={index} className="py-2 px-2 border-b-2 border-base-100 flex justify-between items-center">
+                  {item.startTime} - {item.endTime}
+                  <button
+                    onClick={() => removeTime(index)}
+                    className="ml-2 text-red-500"
+                  >
+                    noņemt
+                  </button>
+                </li>
+              ))}
+          </ul>
+        </div>
+      )}
 
       <button
         onClick={saveTemplate}

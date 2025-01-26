@@ -8,7 +8,7 @@ require('./services/IPCHandler.js');
 const createWindow = () => {
     const win = new BrowserWindow({
         width: 1000, 
-        height: 700, 
+        height: 800, 
         icon: path.join(__dirname, "../public/TRVG_Logo_noBG.png"),
         resizable: false,
         webPreferences: {

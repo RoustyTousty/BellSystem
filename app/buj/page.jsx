@@ -8,8 +8,9 @@ const buj = () => {
     return (
         <div className="p-5 h-screen overflow-auto text-primary bg-white pt-20">
           <h1 className="text-4xl font-bold mb-10 text-center">Palīdzība</h1>
+          <h1 className="text-4xl font-bold mb-10 text-center">Drīzumā tiks pievienots</h1>
 
-          <div className="carousel w-full flex">
+          {/* <div className="carousel w-full flex">
                 {[1, 2, 3].map((item, index) => (
                 <div
                     key={index}
@@ -48,7 +49,7 @@ const buj = () => {
                 >
                     Pārējais
                 </button>
-            </div>
+            </div> */}
 
 
         </div>
