@@ -16,7 +16,7 @@ export default function TemplateBuilder() {
   }, []);
 
   const addTime = () => {
-    if (!newTime || !newSound) return alert("Please fill both time and sound!");
+    if (!newTime || !newSound) return alert("Lūdzu aizpildiet laika un mūzikas lauku!");
     setCurrentTemplate((prev) => ({
       ...prev,
       schedule: [...prev.schedule, { time: newTime, fileName: newSound }],
@@ -32,11 +32,11 @@ export default function TemplateBuilder() {
   };
 
   return (
-    <div className="p-5 bg-neutral text-primary h-screen overflow-hidden flex flex-col items-center pt-20">
-      <h1 className="text-4xl font-bold mb-10">Zvana Trafaretu Izveidotājs</h1>
+    <div className="p-5 bg-neutral text-primary h-screen overflow-visible flex flex-col items-center pt-20">
+      <h1 className="text-4xl font-bold mb-10">Zvana Saraksta Izveidotājs</h1>
 
       <div className="mb-5 w-full max-w-md">
-        <label className="block mb-2">Trafareta nosaukums:</label>
+        <label className="block mb-2 text-xl font-semibold">Saraksta nosaukums:</label>
         <input
           type="text"
           value={currentTemplate.name}
@@ -46,8 +46,8 @@ export default function TemplateBuilder() {
       </div>
 
       <div className="mb-5 w-full max-w-md">
-        <label className="block mb-2">Pievienot laiku:</label>
-        <div className="flex">
+        <label className="block text-xl font-semibold mb-2">Pievienot laiku un mūziku:</label>
+        <div className="flex justify-between">
           <input
             type="time"
             value={newTime}
@@ -83,9 +83,9 @@ export default function TemplateBuilder() {
 
       <button
         onClick={saveTemplate}
-        className="btn btn-primary text-neutral"
+        className="btn btn-primary text-neutral mt-5"
       >
-        Saglabāt trafaretu
+        Saglabāt sarakstu
       </button>
     </div>
   );

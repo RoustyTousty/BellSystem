@@ -39,7 +39,7 @@ const buj = () => {
                   onClick={() => setActiveItem(2)}
                   className="btn btn-md btn-primary text-white"
                 >
-                    Trafaretu izveidotājs
+                    Saraksta izveidotājs
                 </button>
 
                 <button

@@ -24,7 +24,7 @@ export default function Navbar() {
             <button className="btn btn-primary text-neutral">Zvana Iestatīšana</button>
           </Link>
           <Link href="/template-builder">
-            <button className="btn btn-primary text-neutral">Trafaretu Izveidotājs</button>
+            <button className="btn btn-primary text-neutral">Saraksta Izveidotājs</button>
           </Link>
           <Link href="/buj">
             <button className="btn btn-primary text-neutral">Palīdzība</button>
