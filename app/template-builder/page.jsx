@@ -32,7 +32,7 @@ export default function TemplateBuilder() {
   };
 
   return (
-    <div className="p-5 bg-neutral text-primary min-h-screen flex flex-col items-center justify-center">
+    <div className="p-5 bg-neutral text-primary h-screen overflow-hidden flex flex-col items-center pt-20">
       <h1 className="text-4xl font-bold mb-10">Zvana Trafaretu Izveidotājs</h1>
 
       <div className="mb-5 w-full max-w-md">

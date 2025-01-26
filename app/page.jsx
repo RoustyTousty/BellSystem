@@ -12,14 +12,24 @@ const StartUp = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const formatDate = (date) => {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
+
+  
+
   return (
-    <div className="p-5 bg-neutral text-primary flex flex-col items-center justify-center h-full">
+    <div className="p-5 bg-neutral text-primary flex flex-col items-center pt-20 h-screen">
       <h1 className="text-4xl font-bold mb-10">Sveiki!</h1>
 
       <p className="text-2xl mb-5">
         Šodien:{" "}
         <span className="text-secondary font-medium">
-          {currentDateTime.toLocaleDateString()}
+          {formatDate(currentDateTime)}
         </span>
       </p>
 
