@@ -1,7 +1,7 @@
 {
-  "author": "Emīls Miķelsons & Danils Migunovs",
-  "description": "Skolas zvanu sistēmas aplikācija",
-  "name": "TRVG",
+  "author": "RoustyTousty & D3X",
+  "description": "Skolas zvanu sistēmas aplikācija.",
+  "name": "Tukuma Raiņa Valsts ģimnāzījas zvana sistēma.",
   "version": "0.1.0",
   "private": true,
   "main": "main/main.js",
