@@ -4,33 +4,38 @@ import { useEffect, useState } from "react";
 export default function TemplateBuilder() {
   const [templates, setTemplates] = useState([]);
   const [currentTemplate, setCurrentTemplate] = useState({ name: "", schedule: [] });
-  const [newStartTime, setNewStartTime] = useState("");
-  const [newEndTime, setNewEndTime] = useState("");
+  const [newTime, setNewTime] = useState("");
+  const [newSound, setNewSound] = useState("");
+  const [availableSounds, setAvailableSounds] = useState([]);
 
   useEffect(() => {
     const fetchTemplates = async () => {
       const savedTemplates = await window.electronAPI.getTemplates();
       setTemplates(savedTemplates);
     };
+
+    const fetchSounds = async () => {
+      const sounds = await window.electronAPI.listSounds();
+      setAvailableSounds(sounds);
+    };
+
     fetchTemplates();
+    fetchSounds();
   }, []);
 
-  const addTime = () => {
-    if (!newStartTime || !newEndTime) {
-      return alert("Lūdzu aizpildiet laika laukus!");
+  const addBellRing = () => {
+    if (!newTime || !newSound) {
+      return alert("Lūdzu aizpildiet visus laukus (laiks un skaņa)!");
     }
     setCurrentTemplate((prev) => ({
       ...prev,
-      schedule: [
-        ...prev.schedule,
-        { startTime: newStartTime, endTime: newEndTime },
-      ],
+      schedule: [...prev.schedule, { time: newTime, sound: newSound }],
     }));
-    setNewStartTime("");
-    setNewEndTime("");
+    setNewTime("");
+    setNewSound("");
   };
 
-  const removeTime = (index) => {
+  const removeBellRing = (index) => {
     setCurrentTemplate((prev) => {
       const updatedSchedule = prev.schedule.filter((_, i) => i !== index);
       return { ...prev, schedule: updatedSchedule };
@@ -39,17 +44,10 @@ export default function TemplateBuilder() {
 
   const saveTemplate = async () => {
     if (!currentTemplate.name) return alert("Lūdzu nosauciet sarakstu!");
-    if (currentTemplate.schedule.length === 0) return alert("Sarakstā ir jābūt vismaz vienam laika posmam!");
+    if (currentTemplate.schedule.length === 0)
+      return alert("Sarakstā ir jābūt vismaz vienam zvana laikam!");
     await window.electronAPI.saveTemplate(currentTemplate);
-    alert("Template saved successfully!");
-  };
-
-  const getListHeight = () => {
-    const scheduleLength = currentTemplate.schedule.length;
-    if (scheduleLength <= 4) {
-      return `${scheduleLength * 48}px`;
-    }
-    return "192px";
+    alert("Saraksts saglabāts veiksmīgi!");
   };
 
   return (
@@ -61,66 +59,60 @@ export default function TemplateBuilder() {
         <input
           type="text"
           value={currentTemplate.name}
-          onChange={(e) => setCurrentTemplate({ ...currentTemplate, name: e.target.value })}
+          onChange={(e) =>
+            setCurrentTemplate({ ...currentTemplate, name: e.target.value })
+          }
           className="border p-2 rounded w-full bg-base-100 text-primary"
         />
       </div>
 
       <div className="mb-5 w-full max-w-md">
-        <label className="block text-xl font-semibold mb-2">Pievienot stundu laiku:</label>
+        <label className="block text-xl font-semibold mb-2">Pievienot zvana laiku:</label>
         <div className="flex items-center justify-between">
-          
-          <h1 className="mr-2">No:</h1>
-          
           <input
             type="time"
-            value={newStartTime}
-            onChange={(e) => setNewStartTime(e.target.value)}
+            value={newTime}
+            onChange={(e) => setNewTime(e.target.value)}
             className="border p-2 rounded mr-2 bg-base-100 text-primary"
           />
-
-          <h1 className="mr-2">Līdz:</h1>
-          
-          <input
-            type="time"
-            value={newEndTime}
-            onChange={(e) => setNewEndTime(e.target.value)}
-            className="border p-2 rounded mr-2 bg-base-100 text-primary"
-          />
-
-          <button
-            onClick={addTime}
-            className="btn btn-primary text-neutral"
+          <select
+            value={newSound}
+            onChange={(e) => setNewSound(e.target.value)}
+            className="border p-2 rounded bg-base-100 text-primary h-11 w-44"
           >
+            <option value="">Izvēlies skaņu</option>
+            {availableSounds.map((sound, index) => (
+              <option key={index} value={sound}>
+                {sound}
+              </option>
+            ))}
+          </select>
+          <button onClick={addBellRing} className="btn btn-primary text-neutral ml-2">
             Pievienot
           </button>
         </div>
       </div>
 
       {currentTemplate.schedule.length > 0 && (
-        <div className="w-full max-w-md" style={{ height: getListHeight(), overflowY: "auto" }}>
-          <ul>
-            {currentTemplate.schedule
-              .sort((a, b) => a.startTime.localeCompare(b.startTime))
-              .map((item, index) => (
-                <li key={index} className="py-2 px-2 border-b-2 border-base-100 flex justify-between items-center">
-                  {item.startTime} - {item.endTime}
-                  <button
-                    onClick={() => removeTime(index)}
-                    className="ml-2 text-red-500 font-semibold"
-                  >
-                    Noņemt
-                  </button>
-                </li>
-              ))}
-          </ul>
-        </div>
+        <ul className="w-full max-w-md border rounded bg-base-100 text-primary">
+          {currentTemplate.schedule.map((entry, index) => (
+            <li
+              key={index}
+              className="py-2 px-4 border-b flex justify-between items-center"
+            >
+              {`${entry.time} (${entry.sound})`}
+              <button
+                onClick={() => removeBellRing(index)}
+                className="text-red-500 ml-4"
+              >
+                Noņemt
+              </button>
+            </li>
+          ))}
+        </ul>
       )}
 
-      <button
-        onClick={saveTemplate}
-        className="btn btn-primary text-neutral mt-5"
-      >
+      <button onClick={saveTemplate} className="btn btn-primary text-neutral mt-5">
         Saglabāt sarakstu
       </button>
     </div>
