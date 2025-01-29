@@ -1,2 +1,33 @@
 [
+  {
+    "name": "Noklusējuma",
+    "schedule": [
+      {
+        "time": "08:00",
+        "sound": "Zvans.mp3"
+      }
+    ]
+  },
+  {
+    "name": "Noklusējuma",
+    "schedule": [
+      {
+        "time": "08:00",
+        "sound": "Zvans.mp3"
+      },
+      {
+        "time": "09:47",
+        "sound": "Smooth_Operator.mp3"
+      }
+    ]
+  },
+  {
+    "name": "Test",
+    "schedule": [
+      {
+        "time": "09:49",
+        "sound": "Smooth_Operator.mp3"
+      }
+    ]
+  }
 ]
